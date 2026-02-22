@@ -14,18 +14,20 @@ questions = [
 
 if "step" not in st.session_state:
     st.session_state.step = 0
-    st.session_state.history = []
+    st.session_state.answers = []
 
-# Show previous conversation
-for i, answer in enumerate(st.session_state.history):
+# Display previous conversation
+for i in range(len(st.session_state.answers)):
     st.markdown(f"**Tutor:** {questions[i]}")
-    st.markdown(f"**Candidate:** {answer}")
+    st.markdown(f"**Candidate:** {st.session_state.answers[i]}")
 
+# Ask next question
 if st.session_state.step < len(questions):
-    user_input = st.text_input("Your answer:")
+    st.markdown(f"**Tutor:** {questions[st.session_state.step]}")
+    answer = st.text_input("Your answer:")
 
-    if user_input:
-        st.session_state.history.append(user_input)
+    if answer:
+        st.session_state.answers.append(answer)
         st.session_state.step += 1
         st.rerun()
 else:
